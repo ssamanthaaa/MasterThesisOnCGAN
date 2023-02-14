@@ -1,0 +1,156 @@
+%\documentclass{article}
+\documentclass[paper=a4, fontsize=14pt, titlepage, oneside]{article}
+
+\usepackage{graphicx} % Required for inserting images
+
+\title{tesiMagistrale}
+\author{Samantha Gallone}
+\date{February 2023}
+
+
+\usepackage[T1]{fontenc}
+\usepackage[english, italian]{babel}
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=false, allbordercolors=white}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+%\usepackage[style=authoryear,backend=biber]{biblatex}
+%\addbibresource{bibliografia.bib}
+
+%\usepackage{geometry}
+%\geometry{a4paper, inner=4.5cm, outer=3.5cm }% heightrounded, bindingoffset=5mm}
+%\geometry{a4paper, top=3cm, bottom=3cm, left=3.5cm, right=2.5cm, %heightrounded, bindingoffset=5mm}
+
+\usepackage[margin=1.5in]{geometry}
+\renewcommand{\baselinestretch}{1.5} 
+
+\begin{document}
+	%% elimina il numero di pagina della corrente pagina:
+\thispagestyle{empty}
+%% fa si' che la pagina corrente venga contata come pagina 0, 
+%% cosi' la prossima pagina comincia da 1.
+\setcounter{page}{0}
+
+ \begin{figure}[htbp]
+	\centering
+	\includegraphics[width=%
+	 0.25\textwidth]{figures/unitsLogo.jpg}
+	% \caption{Figura di prova} \label{fig:float}
+	\end{figure}
+\begin{center}
+
+\Large
+
+UNIVERSIT\`A DEGLI STUDI DI TRIESTE\\
+%\vspace{-0.4cm}
+%\rule{\textwidth}{0.1mm}\\
+%\large
+%\textsc{Dipartimento di Ingegneria e Architettura}\\ 
+Dipartimento di Ingegneria e Architettura\\
+\bigskip
+Corso di laurea in Ingegneria Elettronica e Informatica \\
+\vfill %%\vspace{3cm}
+%Tesi di Laurea Magistrale \\
+\selectlanguage{english}
+\LARGE{\textbf{Evaluation of conditional images synthesis: generating a photorealistic image from a face sketch}}\\
+\vfill %%\vspace{3cm}
+%\Large
+\selectlanguage{italian}
+\end{center}
+\vfill
+%
+\begin{tabular}[t]{l}
+\textit{Laureanda}:\\
+Samantha GALLONE
+\end{tabular}
+%%%%%%
+\hfill 
+%
+\begin{tabular}[t]{l}
+\textit{Relatore}: \\
+prof. Andrea DE LORENZO
+\end{tabular}
+%%%%%%
+\vfill
+\begin{center}
+\normalsize
+\rule{8cm}{0.1mm}\\
+\bigskip
+ANNO ACCADEMICO 2022--2023
+\end{center}
+%% FINE FRONTESPISIO
+
+% \newpage
+\pagenumbering{Roman}
+\selectlanguage{italian}%
+\begin{abstract}
+...VERSIONE IN ITALIANO
+\end{abstract}
+
+\selectlanguage{english}%
+\begin {abstract}
+... English version of the abstract ...
+\end {abstract}
+
+%\makeindex
+\tableofcontents
+    \thispagestyle{empty}
+	\cleardoublepage
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+\newpage
+\pagenumbering{arabic}
+
+\input{introduction.tex} % CAP 1
+\input{literatureReview.tex} % CAP 2
+\input{dataset.tex} % CAP 3
+\input{implementation.tex} % CAP 4
+\input{training.tex} % CAP 5
+\input{evaluation.tex} % CAP 6
+\input{conclusion.tex} % CAP 7
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{bibliografia}
+%\bibliography{plain.bst}
+
+%\printbibliography
+\end{document}
