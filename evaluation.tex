@@ -152,8 +152,9 @@ Out of the \num{202} responses collected from the survey,  only \num{155} were c
 \end{center}
 \end{table}
 %
-By looking at the column of the percentage of correct responses, two values stand out, namely the percentage of correct responses for the sketches with the IDs \num{2} and \num{8}. These two sketches have reported the smallest and the greatest percentage of correct responses, respectively.\\ 
-The sketch with ID \num{2} can be seen in Fig.~\ref{fig:result sketch with greatest numb of incorrect}, where in Fig~\ref{fig:result sketch with greatest numb of incorrect}(a) each bar represents the number of responses obtained for each image. The third image in the plot obtained the highest number of responses, which may be attributed to the thick eyebrows depicted in the sketch, and also because the drawing gives the impression that it is a male subject.
+By looking at the column of the percentage of correct responses, two values stand out, namely the percentage of correct responses for the sketches with the IDs \num{2} and \num{8}. These two sketches have reported the smallest and the greatest percentage of correct responses, respectively.
+
+\noindent The sketch with ID \num{2} can be seen in Fig.~\ref{fig:result sketch with greatest numb of incorrect}, where in Fig~\ref{fig:result sketch with greatest numb of incorrect}(a) each bar represents the number of responses obtained for each image. The third image in the plot obtained the highest number of responses, which may be attributed to the thick eyebrows depicted in the sketch, and also because the drawing gives the impression that it is a male subject.
 The average time spent for each image is shown in Figure~\ref{fig:result sketch with greatest numb of incorrect}(b).
 \begin{figure}[!ht]
     \centering
@@ -201,18 +202,18 @@ The average time spent for each image is shown in Figure~\ref{fig:result sketch 
 
 \noindent Before drawing any conclusions, it is of extreme importance to determine whether the proportion of correct answers is due to an actual understanding of the difference between the proposed images and people could actually determine which of the images was inspired by the sketch, rather than just guessing the correct answer. Therefore, the binomial test was performed, to calculate the likelihood of getting a certain number of successes, based on the assumption that the result was randomly obtained. The test essentially checks if the results are statistically significant or just due to random chance.
 
-\noindent The null hypothesis considered in this test is that there is no significant difference between the observed proportion of success and the expected proportion of success by chance, while the p-value represents the probability of observing more extreme outcomes than the observed ones.
-If the p-value is below a predetermined significance level, the null hypothesis is rejected, and it is concluded that the observed outcome is unlikely to be due to chance alone.
+\noindent The null hypothesis considered in this test is that there is no significant difference between the observed proportion of success and the expected proportion of success by chance, while the $p$-value represents the probability of observing more extreme outcomes than the observed ones.
+If the $p$-value is below a predetermined significance level, the null hypothesis is rejected, and it is concluded that the observed outcome is unlikely to be due to chance alone.
 
 \noindent For each question in the survey there are four possible responses, but just one is correct, therefore the probability of guessing it correctly is \num{25}\%.
 The significance value alpha is set to \num{0.05} for all tests. The null hypothesis for the test states that the proportion of correct answers is equal to \num{25}\%, while the alternative hypothesis was that the proportion was greater than \num{25}\%.
 
-\noindent The results of the analysis, shown in Table~\ref{tab:binomial test results}, indicate that, for \num{18} out of the \num{20} questions, the p-value is less than alpha. This suggests that the percentage of correct responses is significantly higher than chance, meaning that it is unlikely that the correct responses are the result of random choices.
+\noindent The results of the analysis, shown in Table~\ref{tab:binomial test results}, indicate that, for \num{18} out of the \num{20} questions, the $p$-value is less than alpha. This suggests that the percentage of correct responses is significantly higher than chance, meaning that it is unlikely that the correct responses are the result of random choices.
 %
 \begin{table}[!ht]
 \begin{center}
     \begin{tabular}{lc}
-    \textbf{SketchID} & \textbf{p-value}  \\
+    \textbf{SketchID} & \textbf{$p$-value}  \\
     0 & 0.65 \\
     1 & 0.00 \\
     2 & 0.88 \\
@@ -241,7 +242,7 @@ The significance value alpha is set to \num{0.05} for all tests. The null hypoth
 \noindent For the questions related to sketch \num{0} and \num{2}, the null hypothesis cannot be rejected, suggesting that the proportion of correct answer is not significantly different from chance. As can be noticed from Figure~\ref{fig:similar images sketch 0 and 2}, the images proposed for these sketches appear to be very similar, making the selection more challenging.
 Overall, these findings suggest that the participants generally performed better than chance.
 
-\noindent Furthermore, this statistical test was also performed on the overall results, considering the number of correct responses out of the total responses, that is \num{509} out of \num{775}. The p-value obtained in this case is \num{0.00}.\\
+\noindent Furthermore, this statistical test was also performed on the overall results, considering the number of correct responses out of the total responses, that is \num{509} out of \num{775}. The $p$-value obtained in this case is \num{0.00}.\\
 \begin{figure}[!ht]
     \centering
     \subfloat[][\emph{ }]
@@ -255,12 +256,12 @@ Overall, these findings suggest that the participants generally performed better
 \noindent An additional analysis was conducted to examine the correlation between the response time and the accuracy of the choices made. 
 In particular, the Spearman correlation coefficient was used, as it measures the strength and direction of the association between two variables. Specifically, it assesses the monotonic relationship between the two variables, meaning that it measures how well the relationship between the variables can be described by a monotonic function. 
 
-\noindent In order to determine if such correlation exists, the two variable considered are the percentage of correct responses and the average time spent to choose the response for each sketch. The Spearman correlation coefficient obtained is \num{-0.56} with a p-value of \num{0.01}, results that indicate statistically significant negative correlation between the two variables. Therefore, as the average time spent to answer increases, the number of correct responses decreases.
+\noindent In order to determine if such correlation exists, the two variable considered are the percentage of correct responses and the average time spent to choose the response for each sketch. The Spearman correlation coefficient obtained is \num{-0.56} with a $p$-value of \num{0.01}, results that indicate statistically significant negative correlation between the two variables. Therefore, as the average time spent to answer increases, the number of correct responses decreases. This outcome can be attributed to the possibility that individuals who paid closer attention to the images may have noticed several details that are also present in the sketch and in the images, which could have influenced their choice. However, additional investigations are required to determine whether or not individuals were genuinely misled by these details.
 Figure~\ref{fig:scatter plot relation avg time and percentage of correct responses} shows this negative correlation between the average time spent per response and the percentage of correct responses. The percentage of responses is represented on the x-axis, and the time spent per response is represented on the y-axis.
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.8\textwidth]{figures/RISULTATI/relationshipTime-responses.png}
+  \includegraphics[width=0.7\textwidth]{figures/RISULTATI/relationshipTime-responses.png}
   \caption{Scatter plot representing the relation between the average time and the percentage of correct responses}
   \label{fig:scatter plot relation avg time and percentage of correct responses}
 \end{figure}
