@@ -2,7 +2,7 @@
 \section{Implementation}
 \label{sec:used GAN discussion}
 % dire che adesso andrò a descrivere le reti che ho usato per ottenre una rete in grado di generare immagini quando condizioanta a uno sketch. 
-In this chapter are described the generative adversarial networks used to generate synthetic images starting from a sketch. 
+In this chapter, the generative adversarial networks used to generate synthetic images starting from a sketch are described. 
 % *******************************************
 %\subsection{GAN configuration}
 \subsection{StyleGAN}
@@ -66,10 +66,10 @@ Furthermore, their path length metric can be included as a regularisation term d
 \label{section:StyleGAN2}
 StyleGAN2 (2020) is an improvement of~(\ref{section:StyleGAN}) for synthesising high-resolution images developed by NVIDIA. This new version is based on the previous one, but with some differences~\cite{Karras2019stylegan2}.
 The authors of StyleGAN2 discovered that styles were not only capable of capturing and transferring the essence of an image, but also transferring visual distortions such as water droplets or smudges.
-They linked these visual distortions to the AdaIN layers, and therefore they made some changes to them in order to eliminate the artifacts. 
+They linked these visual distortions to the AdaIN layers, and therefore they made some changes to them in order to eliminate the artefacts. 
 To overcome this issue, they came up with a new approach to the AdaIN layers, which were previously used as direct inputs to the network. Instead, they integrated the AdaIN layers within the convolutional layers.
 
-\noindent The authors replace the AdaIN operator with a weight modulation and demodulation step, where the modulation adjusts each feature map of the convolution based on the style. 
+\noindent The authors replaced the AdaIN operator with a weight modulation and demodulation step, where the modulation adjusts each feature map of the convolution based on the style. 
 
 \noindent The authors discovered that the strong location preference for facial features in StyleGAN images was due to progressive growing. To address this, they took inspiration from the “Multi-Scale Gradients for Generative Adversarial Networks” paper by Animesh Karnewar and Oliver Wang~\cite{karnewar2019msg} and incorporated the idea of multiple scale gradient using a single architecture. They developed a new architecture, which can be seen in Fig.~\ref{fig:StyleGAN2 architecture}, that employs multiple scales of image generation, which is achieved through the utilisation of a resnet-style skip connection that links lower resolution feature maps to the final generated image.
  \begin{figure}[htbp]
@@ -211,7 +211,7 @@ The initialization of the inversion process consists in starting with an average
 %\subsubsection{ReStyle Encoder architecture}
 \noindent \textbf{ReStyle Encoder architecture}
 
-\noindent The ReStyle encoder (Fig.~\ref{fig:ReStyle encoder architecture}) is design as a variation of the architecture described in~\ref{section:pspFramework} and by~\cite{e4e}. Instead of obtaining the style features from three intermediate levels in the encoder, all style vectors are derived from the final 16×16 feature map. To do so, k different \textit{map2style} blocks are employed to reduce the size of the feature map and produce the corresponding \num{512}-dimensional style input, where $k$ is the number of style inputs in the StyleGAN generator, as introduced in~\ref{section:pspFramework}.\\
+\noindent The ReStyle encoder (Fig.~\ref{fig:ReStyle encoder architecture}) is designed as a variation of the architecture described in~\ref{section:pspFramework} and by~\cite{e4e}. Instead of obtaining the style features from three intermediate levels in the encoder, all style vectors are derived from the final 16×16 feature map. To do so, k different \textit{map2style} blocks are employed to reduce the size of the feature map and produce the corresponding \num{512}-dimensional style input, where $k$ is the number of style inputs in the StyleGAN generator, as introduced in~\ref{section:pspFramework}.\\
  \begin{figure}[htbp]
 \centering
   \includegraphics[scale=0.5]{figures/restyle-encoderArchitecture.png}

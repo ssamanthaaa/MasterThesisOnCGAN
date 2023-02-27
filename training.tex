@@ -81,7 +81,7 @@ In the \textit{config/transforms\_configs.py} this code has to be added:
     --output_size=1024 \
     --stylegan_weights=pretrained_models/stylegan2-ffhq-config-f.pt
  \end{lstlisting}
-where \textit{dataset\_type} is used to specify the name of the dataset to employ and  \textit{encoder\_type} specify the encoder type to apply, that in the case of facial domain is the \textit{BackboneEncoder}. 
+where \textit{dataset\_type} is used to specify the name of the dataset to employ and  \textit{encoder\_type} define the encoder type to apply, that in the case of facial domain is the \textit{BackboneEncoder}. 
 The parameter \textit{exp\_dir} indicates the output directory in which the generated images and the weights of the network will be saved. 
 \textit{workers} and \textit{test\_workers} represent the number of subprocesses that are activated to speed up the training process by dividing the workload among them. 
 The \textit{batch\_size} and \textit{test\_batch\_size} are the number of samples that are passed into the training loop at each iteration. 

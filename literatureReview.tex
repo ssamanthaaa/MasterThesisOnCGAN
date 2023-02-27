@@ -37,11 +37,11 @@ These two networks are in a constant battle, each trying to outsmart the other. 
 \label{eq:binariCross-entropy}
 L(\hat{y}, y) = [y \times \log (\hat{y}) + (1-y)\times \log (1-\hat{y})]
 \end{equation}
-where $y$ represent the original data and $\hat{y}$ the generated one. In training, the discriminator assumes $y=1$ for real data, while for the generated data it is set: $\hat{y} = D(x)$. Substituting this information in equation~\ref{eq:binariCross-entropy} it can be obtained the discriminator loss: 
+where $y$ represents the original data and $\hat{y}$ the generated one. In training, the discriminator assumes $y=1$ for real data, while for the generated data it is set: $\hat{y} = D(x)$. Substituting this information in equation~\ref{eq:binariCross-entropy} the discriminator loss can be obtained: 
 \begin{equation}
     L(D(x),1)=\log(D(x))
 \end{equation}
-For the generator's output data it is assumed $y = 0$, because it outputs fake data, and $\hat{y} = G(D(z))$ for the generated data, where $z$ is a random noise vector sampled from a noise distribution $p_z(z)$ (e.g., uniform or Gaussian distribution). Therefore, the loss for the generator is:
+For the generator's output data, it is assumed that $y = 0$, because it outputs fake data, and $\hat{y} = G(D(z))$ for the generated data, where $z$ is a random noise vector sampled from a noise distribution $p_z(z)$ (e.g., uniform or Gaussian distribution). Therefore, the loss for the generator is:
 \begin{equation}
     L(D(G(z)),0) = \log(1 - D(G(z)))
 \end{equation}
@@ -76,7 +76,13 @@ In addition to train the generator and the discriminator, the errors on their ou
   \label{fig:GAN architecture w loss}
 \end{figure}
 If the discriminator is too good at identifying fake versus real images early in the training process, the generator may struggle to produce convincing fake images, making it difficult for the two models to improve. If the generator is successful in fooling the discriminator, the loss will backpropagate through the discriminator network to improve its performance. On the other hand, if the discriminator effectively distinguishes between fake and real samples, the loss will backpropagate through the generator network to improve its ability to generate samples that are similar to real samples.
-The update rules for the discriminator and the generator are the shown equation~\ref{eq:update rule discriminator} and~\ref{eq:update rule generator} respectively. The weights of each model are represented by $\theta_d$ and $\theta_g$, respectively, and $m$ represents the total number of samples in a batch used to test the models before updating them. Algorithm~\ref{alg:training optimisation} optimises Eq.~\ref{eq:minimax obj function} as show by~\cite{GANGoodfellow}.
+The update rules for the discriminator and the generator are shown in equations~\ref{eq:update rule discriminator} and~\ref{eq:update rule generator} respectively. The weights of each model are represented by $\theta_d$ and $\theta_g$, respectively, and $m$ represents the total number of samples in a batch used to test the models before updating them. Algorithm~\ref{alg:training optimisation} optimises Eq.~\ref{eq:minimax obj function} as show by~\cite{GANGoodfellow}.
+
+\noindent From a mathematical point of view, if the discriminator gets too good at identifying the samples, this may increase the divergence between the generated expected distribution. In case the generated and the real distributions become too diverse or do not overlap, then the generator will suffer from vanishing gradient loss.
+
+\noindent The vanishing gradient problem is a critical issue in training deep neural networks. The problem occurs when the gradients of the parameters with respect to the loss become extremely small, making it difficult for the optimizers to update the parameters of the network effectively since they do not have any effect on the training model. The vanishing gradient problem can lead to slow convergence or complete failure of the training process. 
+One possible solution to this problem is to use the Wasserstein GAN architecture.\\
+
 \begin{algorithm}
 \caption{Minibatch stochastic gradient descent training of generative adversarial nets. The number of steps to apply to the discriminator, $k$, is a hyperparameter.}
 \begin{algorithmic}
@@ -85,8 +91,8 @@ The update rules for the discriminator and the generator are the shown equation~
     \For {$k$ steps }
          \Statex\begin{itemize}
          \setlength{\itemindent}{.2in}
-             \item Sample minibatch of $m$ noise samples $\{ \mathbf{z}^{(1)}, ..., \mathbf{z}^{(m)}$ from noise prior $p_g(\mathbf{z})$
-             \item Sample minibatch of $m$ examples $\{ \mathbf{x}^{(1)}, ..., \mathbf{x}^{(m)}$ from data generating distribution $p_{pdata}(x)$.
+             \item Sample minibatch of $m$ noise samples $\{ \mathbf{z}^{(1)}, ..., \mathbf{z}^{(m)}\}$ from noise prior $p_g(\mathbf{z})$
+             \item Sample minibatch of $m$ examples $\{ \mathbf{x}^{(1)}, ..., \mathbf{x}^{(m)}\}$ from data generating distribution $p_{pdata}(x)$.
              \item Update the discriminator by ascending its stochastic gradient: 
                 \begin{equation}
                 \label{eq:update rule discriminator}
@@ -96,7 +102,7 @@ The update rules for the discriminator and the generator are the shown equation~
     \EndFor
     \begin{itemize}
      \setlength{\itemindent}{.2in}
-        \item Sample minibatch of $m$ noise samples $\{ \mathbf{z}^{(1)}, ..., \mathbf{z}^{(m)}$ from noise prior $p_g(z)$. 
+        \item Sample minibatch of $m$ noise samples $\{ \mathbf{z}^{(1)}, ..., \mathbf{z}^{(m)}\}$ from noise prior $p_g(z)$. 
         \item Update the generator by descending its stochastic gradient:
         \begin{equation}
         \label{eq:update rule generator}
@@ -108,15 +114,9 @@ The update rules for the discriminator and the generator are the shown equation~
 The gradient-based updates can use any standard gradient-based learning rule.
 \end{algorithm}
 
-
-\noindent From a mathematical point of view, if the discriminator gets too good at identifying the samples, this may increase the divergence between the generated expected distribution. In case the generated and the real distributions become too diverse or do not overlap, then the generator will suffer from vanishing gradient loss.
-
-\noindent The vanishing gradient problem is a critical issue in training deep neural networks. The problem occurs when the gradients of the parameters with respect to the loss become extremely small, making it difficult for the optimizer to update the parameters of the network effectively since they have no effect on the training model. The vanishing gradient problem can lead to slow convergence or complete failure of the training process. 
-One possible solution to this problem is to use the Wasserstein GAN architecture.\\
-%
-
+\newpage
 \noindent The goal is to make the expected and generated distribution match as closely as possible. 
-The GAN continues this back and forth process until an equilibrium is reached between the generator and discriminator loss. Over time, the two networks learn from each other and converge to a state where the generator produces samples that are almost indistinguishable from real data, and the discriminator is able to correctly identify which samples are real and which are fake with high accuracy.
+The GAN continues this process back and forth until an equilibrium is reached between the generator and discriminator loss. Over time, the two networks learn from each other and converge to a state where the generator produces samples that are almost indistinguishable from real data, and the discriminator is able to correctly identify which samples are real and which are fake with high accuracy.
 
 \noindent This basic design is referred to as the Vanilla GAN, as it represents the original model from which more advanced GAN architectures have evolved, yet still retaining the two key components of the GAN structure.
 % ************************************
@@ -126,14 +126,14 @@ The GAN continues this back and forth process until an equilibrium is reached be
 The Wasserstein-GAN, also known as WGAN, is a variant of the Vanilla GAN and it was introduced by Arjovsky et al. in 2017~\cite{wgan}. WGAN aims to improve the generator model's capability of approximating the data distribution of a given training dataset by introducing a different training mechanism. 
 Instead of using a discriminator to classify the generated images as real or fake, WGAN uses a critic that scores the authenticity of an image. It uses the Wasserstein distance (also known as Earth-Mover's distance), which is a metric that quantifies the minimum cost of moving mass from one distribution to another to convert the source distribution $q$ to the target distribution $p$. It is used to measure the distance between the distribution of real data and the distribution of generated data.
 
-\noindent In WGAN, the discriminator is trained to be a function that outputs a scalar value instead of a probability, and the generator is trained to minimize the Wasserstein distance.
+\noindent In WGAN, the discriminator is trained to be a function that outputs a scalar value instead of a probability, and the generator is trained to minimise the Wasserstein distance.
 
 \noindent One formulation for the Wasserstein distance is:
 \begin{equation}
     \label{eq:waaserstein distance}
     W(\mathbb{P}_r , \mathbb{P}_g)= \sup_{f \in \mathcal{F}} \mathbb{E}_{x\sim \mathbb{P}_r}[f(x)] - \mathbb{E}_{x \sim \mathbb{P}_g}[f(x)]
 \end{equation}
-where $\mathcal{F}$ is defined as the set of 1-Lipschitz function, which are those satisfying $\|f\|_L \leq 1$ where $\| \cdot \|_L$ represents the Lipschitz norm.
+where $\mathcal{F}$ is defined as the set of 1-Lipschitz functions, which are those satisfying $\|f\|_L \leq 1$ where $\| \cdot \|_L$ represents the Lipschitz norm.
 
 \noindent The WGAN objective function can be formulated as:
 \begin{equation}
@@ -145,7 +145,7 @@ The above formulation needs the critic to be 1-Lipschitz. This condition is ensu
 
 \noindent \textbf{WGAN-GP}
 
-\noindent One step towards stable training of GANs is made by WGAN, however, it may still generate inadequate samples or not converge. The cause of such issues is frequently attributed to the utilization of weight clipping in WGAN, which enforces a Lipschitz constraint on the critic and can result in undesirable behaviour, for example, the convergence of a very deep WGAN critic may often fail. Therefore, to address this issue an alternative to weight clipping to ensure smooth training has been proposed by~\cite{wgan-gp}, which is the Wasserstein GAN with Gradient Penalty (WGAN-GP).
+\noindent One step towards stable training of GANs is made by WGAN, however, it may still generate inadequate samples or not converge. The cause of such issues is frequently attributed to the utilisation of weight clipping in WGAN, which enforces a Lipschitz constraint on the critic and can result in undesirable behaviour, for example, the convergence of a very deep WGAN critic may often fail. Therefore, to address this issue an alternative to weight clipping has been proposed by~\cite{wgan-gp} to ensure smooth training, which is the Wasserstein GAN with Gradient Penalty (WGAN-GP).
 The WGAN-GP method replaces weight clipping with a gradient penalty, introducing an extra loss term that encourages the discriminator to have a gradient with a norm that is near $1$. The resultant optimization problem is given by: 
 \begin{equation}
     L = \mathbb{E}_{\Tilde{\mathbf{x}}\sim \mathbb{P}_g}[D(\Tilde{\mathbf{x}})] - \mathbb{E}_{\mathbf{x}\sim \mathbb{P}_r}[D(\mathbf{x})] + \lambda \mathbb{E}_{\hat{\mathbf{x}}\sim \mathbb{P}_{\hat{\mathbf{x}}}} [( \| \nabla_{\hat{\mathbf{x}}} D( \hat{\mathbf{x}}) \|_2 - 1)^2]
@@ -155,7 +155,7 @@ where the first two terms are the original critic loss of the WGAN, while the la
 % ************************************
 \subsection{ProGAN}
 \label{sec:proGAN}
-ProGAN, short for Progressive Generative Adversarial Network, is a deep learning model that was developed to generate high-resolution, photorealistic images. It was introduced by Karras et al. in 2017~\cite{ProGAN}, it is a type of generative model, which means that it can generate new, synthetic images based on the data it was trained on.
+ProGAN, short for Progressive Generative Adversarial Network, is a deep learning model that was developed to generate high-resolution, photorealistic images. It was introduced by Karras et al. in 2017~\cite{ProGAN}, it is a type of generative model, which means that it can generate new, synthetic images based on the data it is trained on.
 
 \noindent The main idea behind ProGAN is to use a series of generators and discriminators to generate high-resolution images incrementally, starting from low-resolution images (e.g. 4×4) and gradually increasing the resolution until a high-resolution image is obtained (e.g. 1024×1024). This approach is called progressive growing, and it allows the network to learn the finer details of an image in an incremental manner. The generator starts with a random noise input and generates an image with low resolution, which is then evaluated by the discriminator. The discriminator determines whether the generated image is real or not and provides feedback to the generator, allowing it to improve. \\
 
@@ -169,7 +169,7 @@ Another advantage of ProGAN is its ability to produce images at different resolu
 \subsection{Evaluation metric}
 \subsubsection{xCos}
 \label{sec:xcos}
-The state-of-the-art face verification models employ a methodology that involves extracting deep features from a pair of face images and subsequently computing the cosine similarity or the L2-distance of the paired features. The determination of whether the two images are of the same person is based on whether the similarity value exceeds a pre-defined threshold value. However, the approach proposed in the paper “xCos: An Explainable Cosine Metric for Face Verification Task”~\cite{xCos} offers a distinctive approach in which the verification result is obtained by the integration of the local similarity map and the attention map. It is based on the insight that humans tend to compare different facial features to determine whether two face images belong to the same individual. \textit{xCos} leverages this understanding to evaluate the similarity of facial features between two images. It is built using a grid-based feature extraction approach, in which each face image is divided into multiple local regions. The facial features of each local region are then extracted and compared with the features of the corresponding regions in the other image. The resulting similarities are then aggregated across all the local regions to compute a final similarity score. It also includes an attention mechanism that identifies the specific facial features that contribute the most to the similarity score. This attention mechanism allows for a more interpretable and explainable verification result, as it highlights the specific facial features that the model is prioritizing. \\
+The state-of-the-art face verification models employ a methodology that involves extracting deep features from a pair of face images and subsequently computing the cosine similarity or the L2-distance of the paired features. The determination of whether the two images are of the same person is based on whether the similarity value exceeds a pre-defined threshold value. However, the approach proposed in the paper “xCos: An Explainable Cosine Metric for Face Verification Task”~\cite{xCos} offers a distinctive approach in which the verification result is obtained by the integration of the local similarity map and the attention map. It is based on the insight that humans tend to compare different facial features to determine whether two face images belong to the same individual. \textit{xCos} leverages this understanding to evaluate the similarity of facial features between two images. It is built using a grid-based feature extraction approach, in which each face image is divided into multiple local regions. The facial features of each local region are then extracted and compared with the features of the corresponding regions in the other image. The resulting similarities are then aggregated across all the local regions to compute a final similarity score. It also includes an attention mechanism that identifies the specific facial features that contribute the most to the similarity score. This attention mechanism allows for a more interpretable and explainable verification result, as it highlights the specific facial features that the model is prioritising. \\
 
 \noindent The proposed architecture, showed in Fig.~\ref{fig:xCos architecture}, for face recognition consists of a modified CNN backbone and two branches for \textit{xCos} and identification. 
 \begin{figure}[!ht]
